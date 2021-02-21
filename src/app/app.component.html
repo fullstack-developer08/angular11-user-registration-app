@@ -1,0 +1,163 @@
+<div class="row mt-2">
+  <div class="userForm">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <mat-card-title>User Registration Form</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="userRegForm" class="example-form" (ngSubmit)="handleSubmit()">
+
+          <table class="example-full-width" cellspacing="0">
+            <tr>
+              <td>
+                <mat-form-field class="example-full-width">
+                  <mat-label>First name</mat-label>
+                  <input matInput pattern="[a-zA-Z0-9]*" formControlName="firstName">
+                  <mat-error *ngIf="userRegForm?.controls?.firstName?.errors?.pattern">
+                    Please enter alphanumeric characters without space
+                  </mat-error>
+                  <mat-error *ngIf="userRegForm?.controls?.firstName?.errors?.required">
+                    Email is <strong>required</strong>
+                  </mat-error>
+                </mat-form-field>
+
+              </td>
+              <td>
+                <mat-form-field class="example-full-width">
+                  <mat-label>Last Name</mat-label>
+                  <input matInput pattern="[a-zA-Z0-9]*" formControlName="lastName">
+                  <mat-error *ngIf="userRegForm?.controls?.firstName?.errors?.pattern">
+                    Please enter alphanumeric characters without space
+                  </mat-error>
+                  <mat-error *ngIf="userRegForm?.controls?.firstName?.errors?.required">
+                    Email is <strong>required</strong>
+                  </mat-error>
+                </mat-form-field>
+              </td>
+            </tr>
+          </table>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>Email</mat-label>
+            <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com">
+            <mat-error *ngIf="userRegForm?.controls?.firstName?.errors?.email">
+              Please enter a valid email address
+            </mat-error>
+            <mat-error *ngIf="userRegForm?.controls?.firstName?.errors?.required">
+              Email is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <div class="mt-6">
+            <mat-form-field appearance="fill" style="width: 380px;">
+              <mat-label>Select Gender</mat-label>
+              <mat-select formControlName="gender">
+                <mat-option *ngFor="let gender of genders" [value]="gender">
+                  {{gender}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="userRegForm?.controls?.gender?.errors?.required">
+                Please select gender
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="mt-6">
+            <mat-form-field appearance="fill" style="width: 380px;">
+              <mat-label>Date of birth</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="dob">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
+              <mat-error *ngIf="userRegForm?.controls?.gender?.errors?.required">
+                Please select date
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <table class="example-full-width" cellspacing="0">
+            <tr>
+              <td>
+                <mat-form-field class="example-full-width">
+                  <mat-label>Password</mat-label>
+                  <input matInput type="password" formControlName="password">
+                  <mat-error *ngIf="userRegForm?.controls?.password?.errors?.required">
+                    Password is <strong>required</strong>
+                  </mat-error>
+                  <mat-error *ngIf="userRegForm?.controls?.password?.errors?.minlength">
+                    Password should be more than 8 characters
+                  </mat-error>
+                  <mat-error *ngIf="userRegForm?.controls?.password?.errors?.intError">
+                    Password should have at least one number digit
+                  </mat-error>
+                  <mat-error *ngIf="userRegForm?.controls?.password?.errors?.upperCharError">
+                    Password should have at least one uppercase character
+                  </mat-error>
+                  <mat-error *ngIf="userRegForm?.controls?.password?.errors?.smallCharError">
+                    Password should have at least one smallcase character
+                  </mat-error>
+                  <mat-error *ngIf="userRegForm?.controls?.password?.errors?.specialCharError">
+                    Password should have at least one special character
+                  </mat-error>
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field class="example-full-width">
+                  <mat-label>Confirm Password</mat-label>
+                  <input matInput type="password" formControlName="confirmPassword">
+                  <mat-error *ngIf="userRegForm?.controls?.confirmPassword?.errors?.required">
+                    Confirm password is <strong>required</strong>
+                  </mat-error>
+                  <mat-error *ngIf="userRegForm?.controls?.confirmPassword?.errors?.passwordMatchError">
+                    Confirm password is not matching
+                  </mat-error>
+                </mat-form-field>
+              </td>
+            </tr>
+          </table>
+
+          <mat-card-actions class="mt-6">
+            <button mat-raised-button color="primary" type="submit">Submit</button>
+          </mat-card-actions>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="userInfo">
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="firstName">
+          <th mat-header-cell *matHeaderCellDef> FirstName </th>
+          <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="lastName">
+          <th mat-header-cell *matHeaderCellDef> LastName </th>
+          <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef> Email </th>
+          <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+        </ng-container>
+        <ng-container matColumnDef="gender">
+          <th mat-header-cell *matHeaderCellDef> Gender </th>
+          <td mat-cell *matCellDef="let element"> {{element.gender}} </td>
+        </ng-container>
+        <ng-container matColumnDef="dob">
+          <th mat-header-cell *matHeaderCellDef> DOB(MM/DD/YY) </th>
+          <td mat-cell *matCellDef="let element"> {{element.dob | date: 'shortDate'}} </td>
+        </ng-container>
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-mini-fab color="accent" aria-label="Delete User">
+              <mat-icon (click)="deleteUser(element.id)">delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </div>
+</div>
